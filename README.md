@@ -1,4 +1,4 @@
-🍽️ Food Recipes Dashboard — Assignment
+Food Recipes Dashboard — Assessment(Machanx)
 
 A full-stack Food Recipes Dashboard built using:
 
