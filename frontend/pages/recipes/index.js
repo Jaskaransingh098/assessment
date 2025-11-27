@@ -1,11 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Layout from "../../component/Layout";
 import Table from "../../component/Table";
-// import ColumnSelector from "@/component/ColumnSelector";
-// import FilterBar from "@/component/FilterBar";
-// import Pagination from "@/component/Pagination";
-import ColumnSelector from "../../component/ColumnSelector"
-import FilterBar from "../../component/FilterBar"
+import ColumnSelector from "../../component/ColumnSelector";
+import FilterBar from "../../component/FilterBar";
 import Pagination from "../../component/Pagination";
 
 export default function RecipesPage({ initialData }) {
@@ -30,23 +28,26 @@ export default function RecipesPage({ initialData }) {
         });
     };
 
+
+    const onPageChange = (page) => {
+        router.push({
+            pathname: "/recipes",
+            query: { ...router.query, page },
+        });
+    };
+
     return (
-        <div className="p-6 max-w-5xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">Food Recipes</h1>
+        <Layout>
+            <h1 className="text-3xl font-semibold mb-6 text-gray-800">Recipes</h1>
 
             <FilterBar query={router.query} onChange={onFilterChange} />
 
-            <div className="my-4">
-                <ColumnSelector columns={columns} setColumns={setColumns} />
-            </div>
+            <ColumnSelector columns={columns} setColumns={setColumns} />
 
             <Table columns={columns} rows={initialData.recipes} />
 
-            <Pagination
-                page={initialData.page}
-                onPage={(p) => onFilterChange({ page: p })}
-            />
-        </div>
+            <Pagination page={initialData.page} onPage={onPageChange} />
+        </Layout>
     );
 }
 

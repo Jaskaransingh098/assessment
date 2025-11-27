@@ -7,54 +7,50 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.get("/api/recipes", async (req, res) => {
     try {
-        const {
-            search = "",
-            category = "",
-            page = 1,
-            limit = 10
-        } = req.query;
+        let { search, category, page = 1, limit = 10, minProtein, maxCalories } = req.query;
 
-        const offset = (page - 1) * limit;
-        const values = [];
-        let where = "WHERE 1=1";
+        page = Number(page);
+        limit = Number(limit);
 
-        // Search
+        let query = `SELECT * FROM recipes WHERE 1=1`;
+        let params = [];
+
+
         if (search) {
-            values.push(`%${search}%`);
-            where += ` AND (name ILIKE $${values.length} OR description ILIKE $${values.length})`;
+            params.push(`%${search}%`);
+            query += ` AND (name ILIKE $${params.length} OR description ILIKE $${params.length})`;
         }
 
 
         if (category) {
-            values.push(category.toLowerCase());
-            where += ` AND LOWER(category) = $${values.length}`;
+            params.push(category);
+            query += ` AND category = $${params.length}`;
         }
 
 
-        // Fetch
-        const query = `
-      SELECT *
-      FROM recipes
-      ${where}
-      ORDER BY id ASC
-      LIMIT ${limit} OFFSET ${offset};
-    `;
+        if (minProtein) {
+            params.push(Number(minProtein));
+            query += ` AND protein >= $${params.length}`;
+        }
 
-        const result = await database.query(query, values);
 
-        res.json({
-            page: Number(page),
-            limit: Number(limit),
-            total: result.rowCount,
-            recipes: result.rows
-        });
+        if (maxCalories) {
+            params.push(Number(maxCalories));
+            query += ` AND calories <= $${params.length}`;
+        }
+
+
+        params.push(limit);
+        params.push((page - 1) * limit);
+        query += ` LIMIT $${params.length - 1} OFFSET $${params.length}`;
+
+        const recipes = await db.query(query, params);
+        res.json({ page, limit, recipes: recipes.rows });
 
     } catch (err) {
-        console.error("Error fetching recipes:", err);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ error: err.message });
     }
 });
 

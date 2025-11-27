@@ -1,17 +1,21 @@
 export default function Pagination({ page, onPage }) {
     return (
-        <div className="flex justify-between mt-4">
+        <div className="flex items-center justify-center gap-3 my-6 fade-in">
             <button
-                className="px-3 py-2 border rounded"
-                disabled={page <= 1}
                 onClick={() => onPage(page - 1)}
+                disabled={page <= 1}
+                className="text-black px-4 py-2 bg-white border rounded-lg shadow-sm hover:bg-gray-100 active:scale-95 transition disabled:opacity-80 cursor-pointer"
             >
-                Prev
+                Previous
             </button>
 
+            <span className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow">
+                {page}
+            </span>
+
             <button
-                className="px-3 py-2 border rounded"
                 onClick={() => onPage(page + 1)}
+                className=" text-black px-4 py-2 bg-white border rounded-lg shadow-sm hover:bg-gray-100 active:scale-95 transition cursor-pointer"
             >
                 Next
             </button>

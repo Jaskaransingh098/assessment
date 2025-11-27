@@ -16,17 +16,24 @@ export default function ColumnSelector({ columns, setColumns }) {
     };
 
     return (
-        <div className="flex flex-wrap gap-4">
-            {available.map((col) => (
-                <label key={col.key} className="flex items-center gap-2">
-                    <input
-                        type="checkbox"
-                        checked={columns.includes(col.key)}
-                        onChange={() => toggle(col.key)}
-                    />
-                    {col.label}
-                </label>
-            ))}
+        <div className="bg-white p-4 rounded-xl shadow-sm border mb-6 fade-in">
+            <h2 className="text-sm font-semibold text-gray-600 mb-2">Columns</h2>
+
+            <div className="flex flex-wrap gap-4">
+                {available.map((col) => (
+                    <label
+                        key={col.key}
+                        className=" text-black/60 flex items-center gap-2 cursor-pointer transition-all hover:text-blue-600 hover:scale-[1.02]"
+                    >
+                        <input
+                            type="checkbox"
+                            checked={columns.includes(col.key)}
+                            onChange={() => toggle(col.key)}
+                        />
+                        {col.label}
+                    </label>
+                ))}
+            </div>
         </div>
     );
 }
