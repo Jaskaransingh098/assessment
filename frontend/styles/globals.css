@@ -30,7 +30,19 @@ body {
 
 @layer utilities {
   .fade-in {
-    animation: fadeIn .25s ease-out;
+    animation: fadeIn 1s ease-out;
+  }
+
+  .slide-down {
+    animation: slideDown 1s ease-out;
+  }
+
+  .list-animate {
+    animation: listFade .65s ease-out
+  }
+
+  .animate-fadeDown {
+    animation: fadeDown .25s ease-out;
   }
 
   @keyframes fadeIn {
@@ -44,4 +56,79 @@ body {
       transform: translateY(0px);
     }
   }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes listFade {
+    from {
+      opacity: 0;
+      transform: translate(6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeDown {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 10px;
+  border: 2px solid #1f2937;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4b5563 #1f2937;
 }

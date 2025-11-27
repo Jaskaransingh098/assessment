@@ -17,7 +17,7 @@ export default function ColumnSelector({ columns, setColumns }) {
 
     return (
         <div className="bg-white p-4 rounded-xl shadow-sm border mb-6 fade-in">
-            <h2 className="text-sm font-semibold text-gray-600 mb-2">Columns</h2>
+            <h2 className="text-xl font-semibold text-gray-600 mb-2">Columns</h2>
 
             <div className="flex flex-wrap gap-4">
                 {available.map((col) => (

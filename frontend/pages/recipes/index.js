@@ -40,13 +40,23 @@ export default function RecipesPage({ initialData }) {
         <Layout>
             <h1 className="text-3xl font-semibold mb-6 text-gray-800">Recipes</h1>
 
-            <FilterBar query={router.query} onChange={onFilterChange} />
+            <div className="slide-down">
+                <FilterBar query={router.query} onChange={onFilterChange} />
+            </div>
 
-            <ColumnSelector columns={columns} setColumns={setColumns} />
+            <div className="slide-down mt-4">
+                <ColumnSelector columns={columns} setColumns={setColumns} />
+            </div>
 
-            <Table columns={columns} rows={initialData.recipes} />
-
-            <Pagination page={initialData.page} onPage={onPageChange} />
+            <div key={JSON.stringify(initialData)} className="list-animate">
+                <Table columns={columns} rows={initialData.recipes} />
+            </div>
+            <Pagination
+                page={initialData.page}
+                limit={initialData.limit}
+                count={initialData.recipes.length}
+                onPage={onPageChange}
+            />
         </Layout>
     );
 }
