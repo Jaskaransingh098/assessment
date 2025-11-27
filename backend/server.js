@@ -20,8 +20,10 @@ app.get("/api/recipes", async (req, res) => {
 
         if (search) {
             params.push(`%${search}%`);
-            query += ` AND (name ILIKE $${params.length} OR description ILIKE $${params.length})`;
+            params.push(`%${search}%`);
+            query += ` AND (name ILIKE $${params.length - 1} OR description ILIKE $${params.length})`;
         }
+
 
 
         if (category) {
@@ -46,7 +48,7 @@ app.get("/api/recipes", async (req, res) => {
         params.push((page - 1) * limit);
         query += ` LIMIT $${params.length - 1} OFFSET $${params.length}`;
 
-        const recipes = await db.query(query, params);
+        const recipes = await database.query(query, params);
         res.json({ page, limit, recipes: recipes.rows });
 
     } catch (err) {
